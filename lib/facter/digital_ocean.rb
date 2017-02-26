@@ -13,7 +13,7 @@ def metadata(id = "")
   open("http://169.254.169.254/metadata/v1/#{id||=''}").read.
     split("\n").each do |o|
     key = "#{id}#{o.gsub(/\=.*$/, '/')}"
-    if key[-1..-1] != '/' || key.ends_with?("tags/")
+    if key[-1..-1] != '/' || key.end_with?("tags/")
       value = open("http://169.254.169.254/metadata/v1/#{key}").read.
         split("\n")
       value = value.size>1 ? value : value.first
