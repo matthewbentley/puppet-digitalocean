@@ -16,7 +16,7 @@ def metadata(id = "")
     if key[-1..-1] != '/' || key.end_with?("tags/")
       value = open("http://169.254.169.254/metadata/v1/#{key}").read.
         split("\n")
-      value = value.size>1 ? value : value.first
+      value = value.size>1 ? value : value.first unless key.end_with? "tags/"
       symbol = "digital_ocean_#{key.gsub(/\-|\//, '_')}".chomp("_").to_sym
   
       # We exclude the user data. This is intentional, the user data often has a
