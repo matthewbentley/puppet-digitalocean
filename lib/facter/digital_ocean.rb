@@ -34,7 +34,7 @@ def metadata(id = "")
 end
 
 begin
-  Timeout::timeout(1) { metadata }
+  Timeout::timeout(2) { metadata }
 rescue Exception => exc
   Facter.debug "Digital Ocean Metadata Unavailable: #{exc.message}"
 end
