@@ -17,7 +17,7 @@ def metadata(id = "")
       value = open("http://169.254.169.254/metadata/v1/#{key}").read.
         split("\n")
       value = value.size>1 ? value : value.first
-      symbol = "digital_ocean_#{key.gsub(/\-|\//, '_')}".to_sym
+      symbol = "digital_ocean_#{key.gsub(/\-|\//, '_')}".chomp("_").to_sym
   
       # We exclude the user data. This is intentional, the user data often has a
       # bad habit of triggering issues inside Facter due to bad parsing once saved into
