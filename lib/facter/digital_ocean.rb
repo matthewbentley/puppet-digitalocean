@@ -13,7 +13,7 @@ def metadata(id = "")
   open("http://169.254.169.254/metadata/v1/#{id||=''}").read.
     split("\n").each do |o|
     key = "#{id}#{o.gsub(/\=.*$/, '/')}"
-    if key[-1..-1] != '/'
+    if key[-1..-1] != '/' || key.ends_with?("tags/")
       value = open("http://169.254.169.254/metadata/v1/#{key}").read.
         split("\n")
       value = value.size>1 ? value : value.first
@@ -23,7 +23,7 @@ def metadata(id = "")
       # bad habit of triggering issues inside Facter due to bad parsing once saved into
       # YAML files and is best left out. You can always pull it on demand/as needed
       # with curl http://169.254.169.254/metadata/v1/user-data if you ever do need it
-      unless key == "user-data"
+      unless key == "user-data" || key == "vendor-data"
         Facter.add(symbol) { setcode { value } }
       end
 
